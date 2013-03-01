@@ -12,7 +12,7 @@ function open(callback){
 
 exports.open = open;
 
-exports.save = function(collection, object, callback){
+exports.save = function(collName, object, callback){
 
 	open(function(err,db){
 		if(err){
@@ -20,7 +20,7 @@ exports.save = function(collection, object, callback){
 			return callback(err);
 		}
 		
-		db.collection(collection, function(err,collection){
+		db.collection(collName, function(err,collection){
 			if(err){
 				db.close();
 				return callback(err);
@@ -33,6 +33,32 @@ exports.save = function(collection, object, callback){
 			});
 		});
 	});	
-	
+
+exports.get = function(collName, search, callback){
+	open(function(err,db){
+		if(err){
+			db.close();
+			callback(err);
+			return;
+		}
+		
+		db.collection(collName, function(err,collection){
+			if(err){
+				db.close();
+				callback(err);
+				return;
+			}
+			
+			collection.findOne(search,function(err,user){
+				if(user){
+					var user = new User(user);
+					callback(err,user);
+					return;
+				}		
+				callback(err,null);
+			});
+		});
+	});	
+};
 	
 };
