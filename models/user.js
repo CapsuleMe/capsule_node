@@ -19,25 +19,7 @@ User.prototype.save = function(callback){
 		password: this.password
 	};
 	
-	Db.open(function(err,db){
-		if(err){
-			db.close();
-			return callback(err);
-		}
-		
-		db.collection('users', function(err,collection){
-			if(err){
-				db.close();
-				return callback(err);
-			}
-			
-			//collection.ensureIndex('number',{unique: true});
-			collection.insert(user,{safe: true},function(err,user){
-				db.close();
-				callback(err,user);
-			});
-		});
-	});	
+	Db.save('users',user,callback);
 };
 
 
