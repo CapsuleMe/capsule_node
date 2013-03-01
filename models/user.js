@@ -2,9 +2,6 @@
  * New node file
  */
 var settings = require('../settings');
-var MongoClient = require('mongodb').MongoClient;
-var Server = require('mongodb').Server;
-
 var Db = require('./db');
 
 function User(user){	
