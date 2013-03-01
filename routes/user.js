@@ -13,7 +13,7 @@ function cryptoPassword(password){
 
 function getRequestUser(req){
 	return new User({
-		number: req.query.n
+		number: req.query.u
 	  , password: cryptoPassword(req.query.p)
 	});
 }
