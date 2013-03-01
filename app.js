@@ -21,9 +21,10 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(express.cookieParser('your secret here'));
+  app.use(express.cookieParser(settings.cookieSecret));
   app.use(express.session({
   	secret: settings.cookieSecret,
+  	cookie: { path: '/', httpOnly: true, maxAge: 240*60*1000 },
   	store: new mongoStore({
   		url: settings.dbUrl
   	})
