@@ -12,7 +12,10 @@ function open(callback){
 
 exports.open = open;
 
-exports.save = function(collName, object, callback){
+//save
+//   .collection:'users'
+//   .object:user
+exports.save = function(save, callback){
 
 	open(function(err,db){
 		if(err){
@@ -20,21 +23,25 @@ exports.save = function(collName, object, callback){
 			return callback(err);
 		}
 		
-		db.collection(collName, function(err,collection){
+		db.collection(save.collection, function(err,collection){
 			if(err){
 				db.close();
 				return callback(err);
 			}
 			
 			//collection.ensureIndex('number',{unique: true});
-			collection.insert(object,{safe: true},function(err,object){
+			collection.insert(save.object,{safe: true},function(err,object){
 				db.close();
 				callback(err,object);
 			});
 		});
 	});	
-
-exports.get = function(collName, search, callback){
+};
+//search
+//     .collection:'users'
+//     .condition: '{number:1}'
+//     .contruct: function User(mongoObject){...}
+exports.get = function(search, callback){
 	open(function(err,db){
 		if(err){
 			db.close();
@@ -42,23 +49,21 @@ exports.get = function(collName, search, callback){
 			return;
 		}
 		
-		db.collection(collName, function(err,collection){
+		db.collection(search.collection, function(err,collection){
 			if(err){
 				db.close();
 				callback(err);
 				return;
 			}
 			
-			collection.findOne(search,function(err,user){
-				if(user){
-					var user = new User(user);
-					callback(err,user);
+			collection.findOne(search.condition,function(err,obj){
+				if(obj){
+					var ret = search.construct(obj);
+					callback(err,obj);
 					return;
 				}		
 				callback(err,null);
 			});
 		});
 	});	
-};
-	
 };
