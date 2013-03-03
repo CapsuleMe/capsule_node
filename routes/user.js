@@ -3,11 +3,11 @@
  * GET users listing.
  */
 var crypto = require('crypto');
-var md5 = crypto.createHash('md5');
 var User = require('../models/user');
 
 
 function cryptoPassword(password){
+	var md5 = crypto.createHash('md5');
 	return md5.update(password).digest('base64');
 }
 
