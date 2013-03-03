@@ -18,16 +18,19 @@ function getRequestUser(req){
 	});
 }
 
+function sendError(res, err){
+	res.send({
+		success:0,
+		err:err,
+		user: null
+	});
+}
+
 exports.list = function(req, res){
   res.send("respond with a resource");
 };
 
 exports.reg = function(req, res){
-	var ret = {
-		success:1,
-		err:'',
-		user: null
-	};
 	var newUser = getRequestUser(req);	
 
 	User.get(newUser.number,function(err, user){
@@ -35,21 +38,19 @@ exports.reg = function(req, res){
 			err='user already exist';
 		}
 		if(err){
-			ret.success = 0;
-			ret.err = err;	
-			res.send(ret);
-			return; 	
+			return sendError(res,err); 	
 		}
 		
 		newUser.save(function(err,user){
 			if(err){
-				ret.success = 0;
-				ret.err = err;	
-				res.send(ret);
-				return; 	
+				return sendError(res,err); 	
 			}
-			ret.user = user;
-			res.send(ret);	
+			
+			res.send({
+				success:1,
+				err:null,
+				user:user
+			});	
 		});		
 	});	
 };
