@@ -2,68 +2,120 @@
  * New node file
  */
 var settings = require('../settings');
-var MongoClient = require('mongodb').MongoClient;
+var mongo = require('mongodb');
+var MongoClient = mongo.MongoClient;
+var BSON = mongo.BSONPure;
 
+//callback: function(err,db){}
 function open(callback){
 	MongoClient.connect(settings.dbUrl,function(err,db){
 		callback(err,db);
 	});
 };
 
-exports.open = open;
-
-//save
-//   .collection:'users'
-//   .object:user
-exports.save = function(save, callback){
-
+///parmas
+//		.error function(err,db)
+//		.success function(collection,db)
+//		.collection 'users'
+function openCollection(params){
 	open(function(err,db){
 		if(err){
-			db.close();
-			return callback(err);
+			return params.error(err,db);
 		}
 		
-		db.collection(save.collection, function(err,collection){
+		db.collection(params.collection,function(err,collection){
 			if(err){
-				db.close();
-				return callback(err);
+				return params.error(err,db);
 			}
 			
-			//collection.ensureIndex('number',{unique: true});
+			params.success(collection,db);
+		});
+	});
+}
+
+function id(_id){
+	return new BSON.ObjectID(_id);
+};
+
+exports.open = open;
+exports.openCollection = openCollection;
+exports.id = id;
+
+//save: {}
+//   .collection:'users'
+//   .object:user
+//callback: function(err,object){}
+exports.save = function(save, callback){
+	openCollection({
+		collection: save.collection,
+		error:function(err,db){
+			db.close();
+			callback(err);
+		},
+		success:function(collection,db){
 			collection.insert(save.object,{safe: true},function(err,object){
 				db.close();
 				callback(err,object);
 			});
-		});
-	});	
+		}
+	});
 };
-//search
+//search: {}
 //     .collection:'users'
 //     .condition: '{number:1}'
 //     .contruct: function User(mongoObject){...}
+//callback: function(err,object){}
 exports.get = function(search, callback){
-	open(function(err,db){
-		if(err){
+	openCollection({
+		collection: search.collection,
+		error: function(err,db){
 			db.close();
 			callback(err);
-			return;
-		}
-		
-		db.collection(search.collection, function(err,collection){
-			if(err){
-				db.close();
-				callback(err);
-				return;
-			}
-			
+		},
+		success:function(collection,db){
 			collection.findOne(search.condition,function(err,obj){
 				if(obj){
-					var ret = search.construct(obj);
-					callback(err,obj);
+					var ret = new search.construct(obj);
+					callback(err,ret);
 					return;
 				}		
 				callback(err,null);
 			});
-		});
-	});	
+		}
+	});
+};
+
+//callback: function(err,object){}
+exports.update = function(update,callback){
+	openCollection({
+		collection: update.collection,
+		error: function(err,db){
+			db.close();
+			callback(err);
+		},
+		success:function(collection,db){
+			collection.update(update.query,update.object,function(err,numberOfUpdatededDocs){
+				callback(err,numberOfUpdatededDocs);
+			});
+		}
+	});
+}
+
+//remove
+//	  .collection: 'user'
+//	  .query: {a:1}
+//callback: function(err,numberOfRemovedDocs){}
+exports.remove = function(remove,callback){
+	openCollection({
+		collection: remove.collection,
+		error: function(err,db){
+			db.close();
+			callback(err);
+		},
+		success: function(collection,db){
+			collection.remove(remove.query,function(err,numberOfRemovedDocs){
+				callback(err,numberOfRemovedDocs);
+			});
+		}
+	});
 };
