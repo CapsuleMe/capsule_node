@@ -13,14 +13,9 @@ creator.createModel(User,'users');
 
 module.exports = User;
 
-//callback - function(err,user)
-User.prototype.save = function(callback){
-	User.save({number: this.number, password: this.password},callback);	
-};
-
 User.getByNumber = function(number,callback){
-	Db.get({
-		collection: collectionName,
+	creator.db.get({
+		collection: 'users',
 		condition: {number:number},
 		construct: User
 	},callback);	

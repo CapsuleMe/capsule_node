@@ -4,6 +4,7 @@
 var settings = require('../settings');
 var Db = require('./db');
 
+exports.db = Db;
 
 exports.createModel = function(construct,collection){
 	
@@ -12,6 +13,10 @@ exports.createModel = function(construct,collection){
 	construct.get = get;
 	construct.update = update;
 	construct.remove = remove;
+	
+	construct.prototype.save = function(callback){
+		construct.save(this,callback);
+	}
 
 };
 
