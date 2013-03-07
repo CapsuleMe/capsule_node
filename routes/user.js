@@ -33,7 +33,7 @@ exports.list = function(req, res){
 exports.reg = function(req, res){
 	var newUser = getRequestUser(req);	
 
-	User.get(newUser.number,function(err, user){
+	User.getByNumber(newUser.number,function(err, user){
 		if(user){
 			err='user already exist';
 		}
@@ -62,3 +62,61 @@ exports.login = function(req, res){
 exports.logout = function(req, res){
 
 };
+
+
+exports.save = function(req, res){
+	var newUser = getRequestUser(req);
+	newUser.save(function(err,user){
+			if(err){
+				return sendError(res,err); 	
+			}
+			res.send({
+				success:1,
+				err:null,
+				user:user
+			});	
+	});			
+};
+
+exports.get = function(req, res){
+	User.get('513074e555164f7417000001',function(err,user){
+		if(err){
+				return sendError(res,err); 	
+			}
+			
+			res.send({
+				success:1,
+				err:null,
+				user:user
+			});	
+	});
+};
+
+exports.update = function(req, res){
+	User.update('513074e555164f7417000001',{$set:{number:'18611447559'}},function(err,count){
+		if(err){
+				return sendError(res,err); 	
+			}
+			res.send({
+				success:1,
+				err:null,
+				count:count
+			});	
+	});
+};
+
+exports.remove = function(req, res){
+	User.remove('512f2998cb2e3a2c1c000001',function(err,count){
+		if(err){
+				return sendError(res,err); 	
+			}
+			res.send({
+				success:1,
+				err:null,
+				count:count
+			});	
+	});
+
+};
+
+

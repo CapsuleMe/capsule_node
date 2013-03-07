@@ -7,6 +7,11 @@ exports = module.exports = function(app){
 	app.get('/users/reg', user.reg);
 	app.get('/users/login', user.login);
 	app.get('/users/logout', user.logout);
+	
+	app.get('/users/save', user.save);
+	app.get('/users/get', user.get);
+	app.get('/users/update', user.update);
+	app.get('/users/remove', user.remove);
 };
 
 
