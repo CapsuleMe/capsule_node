@@ -1,34 +1,27 @@
 /**
  * New node file
  */
-var settings = require('../settings');
-var Db = require('./db');
-var collectionName = 'users';
+var creator = require('./creator');
 
-function User(user){	
+function User(user){
 	this.number = user.number||'';
 	this.name = user.name||'';
 	this.password = user.password||'';
 };
 
+creator.createModel(User,'users');
+
 module.exports = User;
 
 //callback - function(err,user)
-User.prototype.save = function(callback){	
-	Db.save({
-		collection: collectionName,
-		object: {number: this.number, password: this.password}
-	},callback);
+User.prototype.save = function(callback){
+	User.save({number: this.number, password: this.password},callback);	
 };
 
-
-// num - user phone number
-// callback - function(err,user)
-User.get = function(num,callback){
+User.getByNumber = function(number,callback){
 	Db.get({
 		collection: collectionName,
-		condition: {number:num},
+		condition: {number:number},
 		construct: User
 	},callback);	
 };
-
