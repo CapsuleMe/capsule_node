@@ -4,6 +4,7 @@
  */
 var crypto = require('crypto');
 var User = require('../models/user');
+var Val = require('./response');
 
 
 function cryptoPassword(password){
@@ -19,11 +20,7 @@ function getRequestUser(req){
 }
 
 function sendError(res, err){
-	res.send({
-		success:0,
-		err:err,
-		user: null
-	});
+	res.send(Val.failed(1,err));
 }
 
 exports.list = function(req, res){
@@ -70,11 +67,7 @@ exports.save = function(req, res){
 			if(err){
 				return sendError(res,err); 	
 			}
-			res.send({
-				success:1,
-				err:null,
-				user:user
-			});	
+			res.send(Val.success(user,'save success'));	
 	});			
 };
 
@@ -84,11 +77,7 @@ exports.get = function(req, res){
 				return sendError(res,err); 	
 			}
 			
-			res.send({
-				success:1,
-				err:null,
-				user:user
-			});	
+		res.send(Val.success(user,'get success'));	
 	});
 };
 
