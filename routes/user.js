@@ -5,6 +5,7 @@
 var crypto = require('crypto');
 var User = require('../models/user');
 var Val = require('./response');
+var Req = require('./request');
 
 
 function cryptoPassword(password){
@@ -54,6 +55,22 @@ exports.reg = function(req, res){
 
 exports.login = function(req, res){
 
+	//Try to get form session first;
+	var user = Req.sessionUser(req);
+	
+	if(user != null){
+		res.send({
+				success:1,
+				err:null,
+				user:user
+			});
+		return;	
+	}
+	
+	var newUser = getRequestUser(req);	
+	req.session.user = newUser;
+	
+	res.send(newUser);
 };
 
 exports.logout = function(req, res){
