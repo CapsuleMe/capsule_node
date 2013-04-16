@@ -56,21 +56,18 @@ exports.reg = function(req, res){
 exports.login = function(req, res){
 
 	//Try to get form session first;
-	var user = Req.sessionUser(req);
+	User.getByNumber('18600406362',function(err,user){
+		if(err){
+			res.send(err);
+		}
+		
+		if(user){
+			req.session.user = user;
+			res.send(user);
+		}
+	});	
+
 	
-	if(user != null){
-		res.send({
-				success:1,
-				err:null,
-				user:user
-			});
-		return;	
-	}
-	
-	var newUser = getRequestUser(req);	
-	req.session.user = newUser;
-	
-	res.send(newUser);
 };
 
 exports.logout = function(req, res){
