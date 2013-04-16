@@ -2,11 +2,19 @@
  * New node file
  */
 var creator = require('./creator');
+var opt = {
+ 	number:null,
+ 	name:null,
+ 	password:null
+ };
 
-function User(user){
-	this.number = user.number||'';
-	this.name = user.name||'';
-	this.password = user.password||'';
+function User(param){
+	creator.obj.safeCopy(opt,param);
+
+	this._id = param._id;
+	this.number = opt.number||'';
+	this.name = opt.name||'';
+	this.password = opt.password||'';
 };
 
 creator.createModel(User,'users');
