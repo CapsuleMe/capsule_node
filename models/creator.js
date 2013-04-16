@@ -3,8 +3,10 @@
  */
 var settings = require('../settings');
 var Db = require('./db');
+var Obj = require('./object');
 
 exports.db = Db;
+exports.obj = Obj;
 
 exports.createModel = function(construct,collection){
 	
