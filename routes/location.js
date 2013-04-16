@@ -1,9 +1,13 @@
 
-var Location = require('../models/location');
+var Location = require('../models/location'),
+	ObjectID = require('mongodb').ObjectID, 
+	DBRef = require('mongodb').DBRef;
 
 function getLocation(req){
+	var id = ObjectID(req.session.user._id);
+
 	return new Location({
-		user: req.session.user._id,
+		user: new DBRef('users',id),
 		la:	req.body.la,
 		lo: req.body.lo,
 		ac: req.body.ac,
