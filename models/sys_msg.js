@@ -17,7 +17,8 @@ function Sys_Msg(param){
  	self.expire = opt.expire;
  		
  	self.isExpire = function(){
- 		return self.time.add({days:self.expire}).isBefore(new Date());
+ 		var earlyDate = new Date().add({days:-self.expire});	
+ 		return self.time.isBefore(earlyDate);
  	};
  }
  
