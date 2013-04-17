@@ -1,14 +1,13 @@
 require('date-utils');
 
 var creator = require('./creator');
-
-var opt = {
- 	msg:null,
- 	time: new Date(),
- 	expire:null
-};
  	
 function Sys_Msg(param){
+	var opt = {
+	 	msg:null,
+	 	time: new Date(),
+	 	expire:null
+	}; 
  	creator.obj.safeCopy(opt,param);
  
  	var self = this;
@@ -16,11 +15,7 @@ function Sys_Msg(param){
  	self.msg = opt.msg;
  	self.time = opt.time;
  	self.expire = opt.expire;
- 	
- 	self.isActive = function(){
- 		return self.time.isAfter(new Date());
- 	};
- 	
+ 		
  	self.isExpire = function(){
  		return self.time.add({days:self.expire}).isBefore(new Date());
  	};

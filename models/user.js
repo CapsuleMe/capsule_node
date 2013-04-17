@@ -2,13 +2,14 @@
  * New node file
  */
 var creator = require('./creator');
-var opt = {
- 	number:null,
- 	name:null,
- 	password:null
- };
 
 function User(param){
+	var opt = {
+	 	number:null,
+	 	name:null,
+	 	password:null
+ 	};
+
 	creator.obj.safeCopy(opt,param);
 
 	this._id = param._id;

@@ -1,13 +1,13 @@
 var creator = require('./creator');
-
-var opt = {
- 	from,
- 	to,
- 	type,
- 	time
-};
  	
 function Friend_Msg(param){
+	var opt = {
+	 	from:null,
+	 	to:null,
+	 	type:null,
+	 	time:null
+	};
+
  	creator.obj.safeCopy(opt,param);
  
  	var self = this;

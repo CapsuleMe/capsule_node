@@ -3,15 +3,16 @@
  */
  
  var creator = require('./creator');
- var opt = {
- 	user:null,
- 	la:null,
- 	lo:null,
- 	ac:null,
- 	time:null
- };
  	
  function Location(param){
+ 	 var opt = {
+	 	user:null,
+	 	la:null,
+	 	lo:null,
+	 	ac:null,
+	 	time:null
+ 	};
+ 
  	creator.obj.safeCopy(opt,param);
  
  	this._id = param._id;
