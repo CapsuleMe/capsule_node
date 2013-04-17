@@ -3,9 +3,9 @@ require('date-utils');
 var creator = require('./creator');
 
 var opt = {
- 	msg,
+ 	msg:null,
  	time: new Date(),
- 	expire
+ 	expire:null
 };
  	
 function Sys_Msg(param){
