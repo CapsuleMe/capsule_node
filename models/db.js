@@ -37,6 +37,12 @@ function id(_id){
 	return new BSON.ObjectID(_id);
 };
 
+function runCallback(callback,err,obj){
+	if(callback){
+		callback(err,obj);
+	}
+}
+
 exports.open = open;
 exports.openCollection = openCollection;
 exports.id = id;
@@ -50,16 +56,44 @@ exports.save = function(save, callback){
 		collection: save.collection,
 		error:function(err,db){
 			db.close();
-			callback(err);
+			runCallback(callback,err);
 		},
 		success:function(collection,db){
 			collection.insert(save.object,{safe: true},function(err,object){
 				db.close();
-				callback(err,object);
+				runCallback(callback,err,object);
 			});
 		}
 	});
 };
+
+//search: {}
+//     .collection:'users'
+//     .contruct: function User(mongoObject){...}
+//callback: function(err,object){}
+exports.getAll = function(search,callback){
+	openCollection({
+		collection: search.collection,
+		error: function(err,db){
+			db.close();
+			runCallback(callback,err);
+		},
+		success:function(collection,db){
+			collection.find().toArray(function(err,objs){			
+				if(objs){
+					var ret = [];
+					for(var i = 0; i < objs.length; i += 1){
+						ret.push(new search.construct(objs[i]));
+					}
+					runCallback(callback,err,ret);
+					return;
+				}		
+				runCallback(callback,err,null);
+			});
+		}
+	});
+};
+
 //search: {}
 //     .collection:'users'
 //     .condition: '{number:1}'
@@ -70,16 +104,16 @@ exports.get = function(search, callback){
 		collection: search.collection,
 		error: function(err,db){
 			db.close();
-			callback(err);
+			runCallback(callback,err);
 		},
 		success:function(collection,db){
 			collection.findOne(search.condition,function(err,obj){
 				if(obj){
 					var ret = new search.construct(obj);
-					callback(err,ret);
+					runCallback(callback,err,ret);
 					return;
 				}		
-				callback(err,null);
+				runCallback(callback,err,null);
 			});
 		}
 	});
@@ -91,11 +125,11 @@ exports.update = function(update,callback){
 		collection: update.collection,
 		error: function(err,db){
 			db.close();
-			callback(err);
+			runCallback(callback,err);
 		},
 		success:function(collection,db){
 			collection.update(update.query,update.object,function(err,numberOfUpdatededDocs){
-				callback(err,numberOfUpdatededDocs);
+				runCallback(callback,err,numberOfUpdatededDocs);
 			});
 		}
 	});
@@ -110,11 +144,11 @@ exports.remove = function(remove,callback){
 		collection: remove.collection,
 		error: function(err,db){
 			db.close();
-			callback(err);
+			runCallback(callback,err);
 		},
 		success: function(collection,db){
 			collection.remove(remove.query,function(err,numberOfRemovedDocs){
-				callback(err,numberOfRemovedDocs);
+				runCallback(callback,err,numberOfRemovedDocs);
 			});
 		}
 	});

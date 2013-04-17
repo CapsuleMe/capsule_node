@@ -12,6 +12,7 @@ exports.createModel = function(construct,collection){
 	
 	construct.collection = collection;
 	construct.save = save;
+	construct.getAll = getAll;
 	construct.get = get;
 	construct.update = update;
 	construct.remove = remove;
@@ -52,3 +53,11 @@ function remove(id,callback){
 		query: {_id:Db.id(id)},
 	},callback);
 };
+
+
+function getAll(callback){
+	Db.getAll({
+		collection:this.collection,
+		construct:this
+	},callback);
+}
