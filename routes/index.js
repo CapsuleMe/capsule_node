@@ -1,6 +1,8 @@
 
 var user = require('./user');
 var loc = require('./location');
+var msg = require('./message'); 
+
 exports = module.exports = function(app){
 	app.get('/', home);
 	app.get('/users', auth, user.list);
@@ -14,6 +16,8 @@ exports = module.exports = function(app){
 	app.get('/users/remove', auth, user.remove);
 	
 	app.get('/loc/rec', auth, loc.rec);
+	
+	app.get('/msg/sys', msg.sysmsg);
 };
 
 
