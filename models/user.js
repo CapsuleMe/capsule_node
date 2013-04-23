@@ -7,15 +7,27 @@ function User(param){
 	var opt = {
 	 	number:null,
 	 	name:null,
-	 	password:null
- 	};
+	 	password:null£¬
+	 	role:null,
+	 	male:'n',
+	 	head:null,
+	 	location:null,
+	 	friends:null,
+	 	profile:null
+	 };
 
 	creator.obj.safeCopy(opt,param);
 
 	this._id = param._id;
-	this.number = opt.number||'';
-	this.name = opt.name||'';
-	this.password = opt.password||'';
+	this.number = opt.number;
+	this.name = opt.name;
+	this.password = opt.password;
+	this.role = opt.role;
+	this.male = opt.male;
+	this.head = opt.head;
+	this.location = opt.location;
+	this.friends = opt.friends;
+	this.profile = opt.profile;
 };
 
 creator.createModel(User,'users');
