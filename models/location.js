@@ -2,7 +2,9 @@
  * New node file
  */
  
- var creator = require('./creator');
+ var creator = require('./creator'),
+ 	 ObjectID = require('mongodb').ObjectID, 
+	 DBRef = require('mongodb').DBRef;
  	
  function Location(param){
  	 var opt = {
@@ -23,6 +25,21 @@
  	this.time = opt.time;
  }
  
+Location.prototype.user(user){
+	if(!user){
+		return this.user;
+	}
+	
+	if(typeof user == 'DBRef'){
+		this.user = user;
+	}
+	else(typeof user == 'ObjectID'){
+		this.user = new DBRef('users',user);
+	}
+	else{
+		this.user = new DBRef('users',ObjectID(user));
+	}
+}
  
 creator.createModel(Location,'location');
 
