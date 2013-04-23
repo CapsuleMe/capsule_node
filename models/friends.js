@@ -9,8 +9,8 @@ function Friends(param){
 	
 	obj.safeCopy(opt,param);
 	
-	this.near = opt.near||'';
-	this.normal = opt.normal||'';
+	this.near = opt.near;
+	this.normal = opt.normal;
 
 }
 

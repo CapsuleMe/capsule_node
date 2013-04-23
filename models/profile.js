@@ -14,14 +14,14 @@ function Profile(param){
 	
 	obj.safeCopy(opt,param);
 	
-	this.mail = opt.mail||'';
-	this.weibo = opt.weibo||'';
-	this.qq = opt.qq||'';
-	this.homepage = opt.homepage||'';
-	this.company = opt.company||'';
-	this.university = opt.university||'';
-	this.address = opt.address||'';
-	this.job = opt.job||'';	
+	this.mail = opt.mail;
+	this.weibo = opt.weibo;
+	this.qq = opt.qq;
+	this.homepage = opt.homepage;
+	this.company = opt.company;
+	this.university = opt.university;
+	this.address = opt.address;
+	this.job = opt.job;	
 }
 
 module.exports = Profile;
