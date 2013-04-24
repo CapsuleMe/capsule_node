@@ -1,7 +1,9 @@
 /**
  * New node file
  */
-var creator = require('./creator');
+var creator = require('./creator'),
+	Friends = require('./friends'),
+	Profile = require('./profile');
 
 function User(param){
 	var opt = {
@@ -12,8 +14,8 @@ function User(param){
 	 	male:'n',
 	 	head:null,
 	 	location:null,
-	 	friends:null,
-	 	profile:null
+	 	friends:new Friends(),
+	 	profile:new Profile()
 	 };
 
 	creator.obj.safeCopy(opt,param);
@@ -41,3 +43,4 @@ User.getByNumber = function(number,callback){
 		construct: User
 	},callback);	
 };
+
