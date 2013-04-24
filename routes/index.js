@@ -2,6 +2,7 @@
 var user = require('./user');
 var loc = require('./location');
 var msg = require('./message'); 
+var friends = require('./message'); 
 
 exports = module.exports = function(app){
 	app.get('/', home);
@@ -15,9 +16,20 @@ exports = module.exports = function(app){
 	app.get('/users/update', auth, user.update);
 	app.get('/users/remove', auth, user.remove);
 	
-	app.get('/loc/rec', auth, loc.rec);
+	//Friends
+	app.post('/friend/list',auth, friends.list);
+	app.post('/friend/near',auth, friends.near);
+	app.post('/friend/normal',auth, friends.normal);
+	app.post('/friend/confirm',auth, friends.confirm);
+	app.post('/friend/remove',auth, friends.remove);
 	
-	app.get('/msg/sys', msg.sysmsg);
+	//Location
+	app.post('/loc/rec', auth, loc.rec);
+	
+	//Message
+	app.post('/msg/sys', msg.sysmsg);
+	
+	
 };
 
 
