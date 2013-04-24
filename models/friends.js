@@ -14,6 +14,16 @@ function Friends(param){
 
 }
 
+Friends.prototype.add = function(id,type){
+	if(type == 0){
+		normal(id);
+	}
+	
+	if(type == 1){
+		near(id);
+	}
+}
+
 Friends.prototype.near = function(id){
 	if(array.contain(this.near,id)>=0){
 		return;
