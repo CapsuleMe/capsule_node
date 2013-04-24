@@ -2,10 +2,11 @@ var creator = require('./creator');
  	
 function Friend_Msg(param){
 	var opt = {
-	 	from:null,
-	 	to:null,
-	 	type:null,
-	 	time:null
+	 	from:null, //should be id string type
+	 	to:null,   //should be id string type
+	 	type:0, // 0 normal, 1 near
+	 	time:new Date(),
+	 	active:1
 	};
 
  	creator.obj.safeCopy(opt,param);
@@ -16,6 +17,7 @@ function Friend_Msg(param){
  	self.to = opt.to;
  	self.type = opt.type;
  	self.time = opt.time;
+ 	self.active = opt.active;
  }
  
  
