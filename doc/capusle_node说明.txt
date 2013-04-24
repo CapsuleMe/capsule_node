@@ -1,0 +1,50 @@
+说明
+
+模块变动，新下载了date-utils模块，对日期进行处理。package.json已经修改好了，老方法npm install。
+
+文件说明
+	+models
+		-array.js 字符串帮助类
+		-creator.js Db相关类初始化工具，有注释。
+		-db.js 		链接mongodb的主要实现
+		-friend_msg.js, location.js, sys_msg.js, user.js Db相关类
+		-friends.js,profile.js 用于user内的辅助类
+		-object.js object上的帮助工具，不用直接使用，可以通过creator.obj调用
+		
+		创建Db类的方法
+			var creator = require('./creator'),
+			ObjectID = require('mongodb').ObjectID, //mongodb ID 类型
+			DBRef = require('mongodb').DBRef;
+		
+			function Location(param){
+				 //默认值
+				 var opt = {
+					user:null,
+					la:null,
+					lo:null,
+					ac:null,
+					time:null
+				};
+	 
+				//安全复制，防止undefined引发的异常
+				creator.obj.safeCopy(opt,param);
+			 
+				//赋值
+				this._id = param._id;
+				this.user = opt.user;
+				this.la = opt.la;
+				this.lo = opt.lo;
+				this.ac = opt.ac;
+				this.time = opt.time;
+			}
+			
+			creator.createModel(Location,'location');//初始化Db类，第二个参数是对应collection值
+			module.exports = Location;//一定要这么写
+	+routes
+		-index.js 所有的路由规则放在这里
+		-user.js, friends.js, message.js Controller类
+		-request 简化request的处理放在这里，现在只有一个SessionUser方法，安全获取SessionUser,也可以通过req.session.user获取
+		-value 返回值包装类，简化返回值的封装
+	-app.js 这个不说了，入口
+	-config.js app的设置移动到这里了
+	-settings.js 系统设置
