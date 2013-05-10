@@ -20,7 +20,7 @@ exports.rec = function(req, res){
 	var loc = getLocation(req);
 	loc.save(function(err){
 		if(err){
-			res.send(Val.error(1,err);
+			res.send(Val.error(1,err));
 		}else{
 			res.send(Val.success(null));
 		}

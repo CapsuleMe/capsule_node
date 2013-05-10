@@ -25,7 +25,7 @@
  	this.time = opt.time;
  }
  
-Location.prototype.user(user){
+Location.prototype.user = function(user){
 	if(!user){
 		return this.user;
 	}
@@ -33,7 +33,7 @@ Location.prototype.user(user){
 	if(typeof user == 'DBRef'){
 		this.user = user;
 	}
-	else(typeof user == 'ObjectID'){
+	else if(typeof user == 'ObjectID'){
 		this.user = new DBRef('users',user);
 	}
 	else{

@@ -9,7 +9,7 @@ function User(param){
 	var opt = {
 	 	number:null,
 	 	name:null,
-	 	password:null£¬
+	 	password:null,
 	 	role:null,
 	 	male:'n',
 	 	head:null,

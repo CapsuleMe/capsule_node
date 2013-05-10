@@ -4,7 +4,7 @@ var obj = require('./object'),
 function Friends(param){
 	var opt = {
 		near:null,
-		normal
+		normal:null
 	};
 	
 	obj.safeCopy(opt,param);
