@@ -1,6 +1,6 @@
 var User = require('../models/user'),
 	FMsg = require('../models/friend_msg'),
-	Val = require('./value'),
+	Val = require('./value');
 
 function sendError(res,err){
 	res.send(Val.error(1,err));
