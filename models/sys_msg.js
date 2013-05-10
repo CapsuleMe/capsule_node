@@ -6,7 +6,7 @@ function Sys_Msg(param){
 	var opt = {
 	 	msg:null,
 	 	time: new Date(),
-	 	expire:null
+	 	expire:7
 	}; 
  	creator.obj.safeCopy(opt,param);
  
