@@ -12,7 +12,7 @@ function User_Msg(param){
  
  	var self = this;
  	self._id = param._id;
- 	selft.user = opt.user;
+ 	self.user = opt.user;
  	self.msg = opt.msg;
  	self.time = opt.time;
  	self.active = opt.active;
