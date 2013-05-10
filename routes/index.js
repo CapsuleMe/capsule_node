@@ -2,7 +2,7 @@
 var user = require('./user'),
 	loc = require('./location'),
  	msg = require('./message'),
- 	friends = require('./message'); 
+ 	friends = require('./friends'); 
 
 
 
@@ -21,15 +21,13 @@ exports = module.exports = function(app){
 
 function run(app){
 	app.get('/', home);
-	app.get('/users', auth, user.list);
-	app.get('/users/reg', user.reg);
-	app.get('/users/login', user.login);
-	app.get('/users/logout', auth, user.logout);
+	app.post('/users/reg', user.reg);
+	app.post('/users/login', user.login);
+	app.post('/users/logout', auth, user.logout);
 	
-	app.get('/users/save', auth, user.save);
-	app.get('/users/get', auth, user.get);
-	app.get('/users/update', auth, user.update);
-	app.get('/users/remove', auth, user.remove);
+	app.post('/users/get', auth, user.get);
+	app.post('/users/update', auth, user.update);
+	app.post('/users/remove', auth, user.remove);
 	
 	//Friends
 	app.post('/friend/list',auth, friends.list);
@@ -48,6 +46,26 @@ function run(app){
 
 function debug(app){
 	app.get('/', home);
+	app.get('/users/reg', user.reg);
+	app.get('/users/login', user.login);
+	app.get('/users/logout', auth, user.logout);
+	
+	app.get('/users/get', auth, user.get);
+	app.get('/users/update', auth, user.update);
+	app.get('/users/remove', auth, user.remove);
+
+	//Friends
+	
+	app.get('/friend/list',auth, friends.list);
+	app.get('/friend/near',auth, friends.near);
+	app.get('/friend/normal',auth, friends.normal);
+	app.get('/friend/confirm',auth, friends.confirm);
+	app.get('/friend/remove',auth, friends.remove);
+	
+	//Location
+	app.get('/loc/rec', auth, loc.rec);
+
+	//Message
 	app.get('/msg/sys', msg.sysmsg);
 	app.get('/msg/user', msg.usermsg);
 }
@@ -55,7 +73,6 @@ function debug(app){
 function test(app){
 	
 }
-
 
 
 /*
