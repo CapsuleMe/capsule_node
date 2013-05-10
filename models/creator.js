@@ -20,6 +20,9 @@
  * 	obj = object with same type
  * 	callback = fucntion(err,obj)
  *
+ * getAll
+ * 
+ * gets
  *
  * 势力方法
  * save(callback)
@@ -44,6 +47,7 @@ exports.createModel = function(construct,collection){
 	construct.save = save;
 	construct.getAll = getAll;
 	construct.get = get;
+	construct.gets = gets;
 	construct.update = update;
 	construct.remove = remove;
 	
@@ -93,3 +97,11 @@ function getAll(callback){
 		construct:this
 	},callback);
 }
+
+function gets(condition,callback){
+	Db.gets({
+		collection: this.collection,
+		condition: condition,
+		construct: this
+	},callback);	
+};

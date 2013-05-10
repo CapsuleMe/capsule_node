@@ -119,6 +119,33 @@ exports.get = function(search, callback){
 	});
 };
 
+
+//search: {}
+//     .collection:'users'
+//     .condition: '{number:1}'
+//     .contruct: function User(mongoObject){...}
+//callback: function(err,object){}
+exports.gets = function(search, callback){
+	openCollection({
+		collection: search.collection,
+		error: function(err,db){
+			db.close();
+			runCallback(callback,err);
+		},
+		success:function(collection,db){
+			collection.find(search.condition,function(err,obj){
+				if(obj){
+					var ret = new search.construct(obj);
+					runCallback(callback,err,ret);
+					return;
+				}		
+				runCallback(callback,err,null);
+			});
+		}
+	});
+};
+
+
 //callback: function(err,object){}
 exports.update = function(update,callback){
 	openCollection({
