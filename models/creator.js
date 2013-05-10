@@ -24,7 +24,7 @@
  * 
  * gets
  *
- * 势力方法
+ * 实例方法
  * save(callback)
  * 	callback = fucntion(err,obj)
  *
