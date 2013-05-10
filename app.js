@@ -15,7 +15,7 @@ var app = require('express')()
   , config = require('./config');
 
 //Globle Variables
-promise = require('./utils/promise');
+q = require('q');
 settings = require('./settings');
 
 config(app);

@@ -10,6 +10,7 @@
     "jade": "*",
     "connect-mongo": "*",
     "mongodb": "1.2.13",
-    "date-utils":"*"
+    "date-utils":"*",
+    "q":"*"
   }
 }
