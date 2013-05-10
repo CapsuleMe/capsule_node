@@ -14,6 +14,8 @@ var app = require('express')()
   , routes = require('./routes/index')
   , config = require('./config');
 
+promise = require('./utils/promise');
+
 config(app);
 
 routes(app);
