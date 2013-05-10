@@ -1,10 +1,25 @@
 
-var user = require('./user');
-var loc = require('./location');
-var msg = require('./message'); 
-var friends = require('./message'); 
+var user = require('./user'),
+	loc = require('./location'),
+ 	msg = require('./message'),
+ 	friends = require('./message'); 
+
+
 
 exports = module.exports = function(app){
+	if(settings.mode == 'debug'){
+		return debug(app);
+	}
+	
+	if(settings.mode == 'test'){
+		return test(app);
+	}
+	
+	run(app);
+};
+
+
+function run(app){
 	app.get('/', home);
 	app.get('/users', auth, user.list);
 	app.get('/users/reg', user.reg);
@@ -28,9 +43,19 @@ exports = module.exports = function(app){
 	
 	//Message
 	app.post('/msg/sys', msg.sysmsg);
+	app.post('/msg/user', msg.usermsg);
+}
+
+function debug(app){
+	app.get('/', home);
+	app.get('/msg/sys', msg.sysmsg);
+	app.get('/msg/user', msg.usermsg);
+}
+
+function test(app){
 	
-	
-};
+}
+
 
 
 /*
@@ -46,5 +71,4 @@ function auth(req,res,next){
 	}else{
 		next(new Error('Unauthorized'));
 	}
-	
 }
