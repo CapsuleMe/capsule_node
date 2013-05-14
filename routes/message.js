@@ -9,7 +9,7 @@ var SysMsg = require('../models/sys_msg'),
 exports.sysmsg = function(req,res){	
 	SysMsg.getAll(function(err,objs){
 		if(err){
-			res.send(Val.error(1,err));
+			res.json(Val.error(1,err));
 			return;
 		}
 		
@@ -19,7 +19,7 @@ exports.sysmsg = function(req,res){
 				ret.push(objs[i]);
 			}
 		}
-		res.send(Val.success(ret));
+		res.json(Val.success(ret));
 	});
 };
 
@@ -29,7 +29,7 @@ exports.usermsg = function(req,res){
 
 	UserMsg.gets({user:id},function(err,objs){
 		if(err){
-			res.send(Val.error(1,err));
+			res.json(Val.error(1,err));
 			return 0;
 		}
 			
@@ -38,14 +38,14 @@ exports.usermsg = function(req,res){
 		
 		FriendMsg.gets({to:id},function(err,objs){
 			if(err){
-				res.send(Val.error(1,err));
+				res.json(Val.error(1,err));
 				return 0;
 			}
 			
 			ret.concat(objs);
 			console.log('2');
 			
-			res.send(Val.success(ret));
+			res.json(Val.success(ret));
 			console.log('3');
 		});
 		

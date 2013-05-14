@@ -3,12 +3,12 @@ var User = require('../models/user'),
 	Val = require('./value');
 
 function sendError(res,err){
-	res.send(Val.error(1,err));
+	res.json(Val.error(1,err));
 }
 
  exports.list = function(req,res){
  	var friends = req.session.user.friends;
- 	return res.send(Val.success(friends));
+ 	return res.json(Val.success(friends));
  };
  
  exports.near = function(req,res){	
@@ -30,7 +30,7 @@ function sendError(res,err){
 				return;
 			}
 			
-			res.send(Val.success(msg));
+			res.json(Val.success(msg));
 		});
 	});
 	
@@ -55,7 +55,7 @@ function sendError(res,err){
 				return;
 			}
 			
-			res.send(Val.success(msg));
+			res.json(Val.success(msg));
 		});
 	});
  };
@@ -108,7 +108,7 @@ function sendError(res,err){
  				return;
  			}
  		});
- 		res.send(Val.success(null,'Success'));
+ 		res.json(Val.success(null,'Success'));
  	});
  };
  
@@ -119,7 +119,7 @@ function sendError(res,err){
  				return;
  		}
  		
- 		return res.send(Val.success(number,'Success'));
+ 		return res.json(Val.success(number,'Success'));
  	});
  };
  
