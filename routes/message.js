@@ -32,22 +32,22 @@ exports.usermsg = function(req,res){
 			res.json(Val.error(1,err));
 			return 0;
 		}
-			
 		ret.concat(objs);
-		console.log('1');
-		
-		FriendMsg.gets({to:id},function(err,objs){
-			if(err){
-				res.json(Val.error(1,err));
-				return 0;
-			}
-			
-			ret.concat(objs);
-			console.log('2');
-			
-			res.json(Val.success(ret));
-			console.log('3');
-		});
-		
+		res.json(Val.success(ret));
+	});
+};
+
+
+exports.friendmsg = function(req,res){	
+	var ret = [];	
+	var id = req.body.id;
+
+	FriendMsg.gets({to:id},function(err,objs){
+		if(err){
+			res.json(Val.error(1,err));
+			return 0;
+		}
+		ret.concat(objs);
+		res.json(Val.success(ret));
 	});
 };
