@@ -3,3 +3,37 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+
+  ul 
+    li
+      a(href='/') Home
+    li      
+      a(href='/users/reg') Register
+    li      
+      a(href='/users/login') Login
+    li      
+      a(href='/users/logout') Logout
+    li      
+      a(href='/users/get') User Info
+    li      
+      a(href='/users/update') Update User
+    li      
+      a(href='/users/remove') Remove User
+    li      
+      a(href='/friend/list') Friends List
+    li      
+      a(href='/friend/near') Add a Near
+    li      
+      a(href='/friend/normal') Add a Friend
+    li      
+      a(href='/friend/confirm') Confirm Friend Request 
+    li      
+      a(href='/friend/remove') Remove a Friend
+    li      
+      a(href='/loc/rec') Location Update
+    li      
+      a(href='/msg/sys') System Message
+    li      
+      a(href='/msg/user') User Message
+    li      
+      a(href='/msg/friend') Friend Message
