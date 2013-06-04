@@ -20,6 +20,8 @@ exports = module.exports = function(app){
 
 
 function run(app){
+	console.log('Runing in [Nomral] mode!')
+	
 	app.get('/', home);
 	app.post('/users/reg', user.reg);
 	app.post('/users/login', user.login);
@@ -40,11 +42,14 @@ function run(app){
 	app.post('/loc/rec', auth, loc.rec);
 	
 	//Message
-	app.post('/msg/sys', msg.sysmsg);
-	app.post('/msg/user', msg.usermsg);
+	app.post('/msg/sys', auth, msg.sysmsg);
+	app.post('/msg/user', auth, msg.usermsg);
+	app.post('/msg/friend', auth, msg.friendmsg);
 }
 
 function debug(app){
+	console.log('Runing in [Debug] mode!')
+	
 	app.get('/', home);
 	app.get('/users/reg', user.reg);
 	app.get('/users/login', user.login);
@@ -66,11 +71,13 @@ function debug(app){
 	app.get('/loc/rec', auth, loc.rec);
 
 	//Message
-	app.get('/msg/sys', msg.sysmsg);
-	app.get('/msg/user', msg.usermsg);
+	app.get('/msg/sys', auth, msg.sysmsg);
+	app.get('/msg/user', auth, msg.usermsg);
+	app.get('/msg/friend', auth, msg.friendmsg);
 }
 
 function test(app){
+	console.log('Runing in [Test] mode!')
 	
 }
 
