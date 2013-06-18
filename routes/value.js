@@ -13,9 +13,12 @@ function Value(val,code,msg){
 }
 
 exports.success = function(val,msg){
-	return new Value(val,0,msg);
+	return val;
+	
+	//return new Value(val,0,msg);
 };
 
 exports.error = function(code,msg){
-	return new Value(null,code,msg);
+	return null;
+	//return new Value(null,code,msg);
 }
