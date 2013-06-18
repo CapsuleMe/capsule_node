@@ -61,6 +61,27 @@ exports.login = function(req, res){
 	});
 };
 
+exports.login2 = function(req, res){
+	var number = req.body.number;
+		pwd = cryptoPassword(req.body.pwd);
+		
+	User.getByNumber(number,function(err,user){
+		if(err){
+			return res.json(Val.error(1,err));
+		}
+		
+		if(!user){
+			return res.json(Val.success(1)); // no user	
+		}
+			
+		if(user.password != pwd){
+			return res.json(Val.success(2)); // wrong password
+		}
+		
+		req.session.user = user;
+		res.json(Val.success(0));	
+	});
+};
 
 
 exports.logout = function(req, res){
@@ -84,7 +105,7 @@ exports.update = function(req,res){
 };
 
 exports.get = function(req,res){
-	var id = req.body.id;
+	var id = req.body.id || req.session.user.id;
 	console.log(id);
 	User.get(id,function(err,user){
 		if(err){
