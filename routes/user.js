@@ -17,9 +17,15 @@ function sendError(res, err){
 }
 
 exports.reg = function(req, res){
+	var number = req.body.number;
+	var password = req.body.password;
+	
+	console.log(number);
+	console.log(password);
+	
 	var user = new User({
-		number:req.body.number,
-		password:cryptoPassword(req.body.password)
+		number:number,
+		password:cryptoPassword(password)
 	});
 	
 	user.save(function(err,user){
@@ -32,12 +38,12 @@ exports.reg = function(req, res){
 		}
 		
 		req.session.user = user;
-		res.json(Val.success(user));	
+		res.json(Val.success(user));
 	});
 };
 
 exports.login = function(req, res){
-	var id = req.body.id,
+	var id = req.body.id;
 		pwd = req.body.pwd;
 	User.get(id,function(err,user){
 		if(err){
@@ -45,11 +51,11 @@ exports.login = function(req, res){
 		}
 		
 		if(!user){
-			return res.json(Val.error(2,'No User'));	
+			return res.json(Val.success(1)); // no user	
 		}
 			
 		if(user.password != pwd){
-			return res.json(Val.error(2,'Wrong PWD'));	
+			return res.json(Val.success(2)); // wrong password
 		}
 		
 		req.session.user = user;
@@ -79,6 +85,7 @@ exports.update = function(req,res){
 
 exports.get = function(req,res){
 	var id = req.body.id;
+	console.log(id);
 	User.get(id,function(err,user){
 		if(err){
 			return res.json(Val.error(1,err));
