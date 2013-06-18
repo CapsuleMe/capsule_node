@@ -25,6 +25,7 @@ function run(app){
 	app.get('/', home);
 	app.post('/users/reg', user.reg);
 	app.post('/users/login', user.login);
+	app.post('/users/login2', user.login2);
 	app.post('/users/logout', auth, user.logout);
 	
 	app.post('/users/get', auth, user.get);
