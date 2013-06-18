@@ -20,9 +20,6 @@ exports.reg = function(req, res){
 	var number = req.body.number;
 	var password = req.body.password;
 	
-	console.log(number);
-	console.log(password);
-	
 	var user = new User({
 		number:number,
 		password:cryptoPassword(password)
@@ -44,7 +41,8 @@ exports.reg = function(req, res){
 
 exports.login = function(req, res){
 	var id = req.body.id;
-		pwd = req.body.pwd;
+		pwd = cryptoPassword(req.body.pwd);
+		
 	User.get(id,function(err,user){
 		if(err){
 			return res.json(Val.error(1,err));
@@ -63,13 +61,15 @@ exports.login = function(req, res){
 	});
 };
 
+
+
 exports.logout = function(req, res){
 	req.session.user = null;
 	res.json(Val.success(0));	
 };
 
 exports.remove = function(req,res){
-	var id = req.body.id;
+	var id = req.session.user._id;
 	User.remove(id,function(err,numberOfRemovedDocs){
 		if(err){
 			return res.json(Val.error(1,err));
