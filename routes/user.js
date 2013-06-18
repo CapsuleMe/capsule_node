@@ -105,8 +105,13 @@ exports.update = function(req,res){
 };
 
 exports.get = function(req,res){
-	var id = req.body.id || req.session.user.id;
-	console.log(id);
+	var id = req.body.id;
+	
+	if(id == undefined){
+		return res.json(Val.success(req.session.user));
+	}
+	
+	
 	User.get(id,function(err,user){
 		if(err){
 			return res.json(Val.error(1,err));
