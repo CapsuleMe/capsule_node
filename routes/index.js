@@ -55,7 +55,7 @@ function debug(app){
 	app.get('/users/login', user.login);
 	app.get('/users/logout', auth, user.logout);
 	
-	app.get('/users/get', auth, user.get);
+	app.get('/users/get', user.get);
 	app.get('/users/update', auth, user.update);
 	app.get('/users/remove', auth, user.remove);
 
