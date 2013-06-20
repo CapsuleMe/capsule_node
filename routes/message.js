@@ -25,7 +25,7 @@ exports.sysmsg = function(req,res){
 
 exports.usermsg = function(req,res){	
 	var ret = [];	
-	var id = req.body.id;
+	var id = req.session.user.id;
 
 	UserMsg.gets({user:id},function(err,objs){
 		if(err){
@@ -40,7 +40,7 @@ exports.usermsg = function(req,res){
 
 exports.friendmsg = function(req,res){	
 	var ret = [];	
-	var id = req.body.id;
+	var id = req.session.user.id;
 
 	FriendMsg.gets({to:id},function(err,objs){
 		if(err){
