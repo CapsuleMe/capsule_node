@@ -1,5 +1,6 @@
 var User = require('../models/user'),
 	FMsg = require('../models/friend_msg'),
+	UMsg = require('../models/user_msg'),
 	Val = require('./value');
 
 function sendError(res,err){
@@ -108,11 +109,11 @@ function sendError(res,err){
  				return;
  			}
  		});
- 		res.json(Val.success(null,'Success'));
+ 		res.json(Val.success(0,'Success'));
  	});
  };
  
- exports.remove = function(req,res){
+ exports.cancel = function(req,res){
  	FMsg.remove(req.body.id,function(err,number){
  		if(err){
  				sendError(res,err);
@@ -123,4 +124,48 @@ function sendError(res,err){
  	});
  };
  
+ exports.remove = function(req,res){
+	 var id = req.body.id;
+	 
+	 //Get Friend's User
+	 User.get(id,function(err,user){
+		if(err){
+			sendError(res,err);
+		}
+		
+		//Remove from Current
+		req.session.user.friends.rm(id);
+		req.session.user.save(function(err,user){
+			if(err){
+				sendError(res,err);
+				return;
+			}
+			
+			//Remove from Freind
+			user.friends.rm(req.session.user.id);
+			user.save(function(err,user){
+				if(err){
+					sendError(res,err);
+					return;
+				}
+				
+				//Create User Message to Friend
+				var umsg = new UMsg({
+					user:id,
+				 	msg:req.session.user.name+"已将你从好友列表中删除。"
+				});
+				
+				umsg.save(function(err,msg){
+					if(err){
+						sendError(res,err);
+						return;
+					}
+					
+					res.json(Val.success(0));
+				});
+			});
+					
+		});
+	 });	 
+ }
 
