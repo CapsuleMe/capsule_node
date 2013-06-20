@@ -22,7 +22,7 @@ exports.rec = function(req, res){
 		if(err){
 			res.json(Val.error(1,err));
 		}else{
-			res.json(Val.success(null));
+			res.json(Val.success(0));
 		}
 	});
 }
