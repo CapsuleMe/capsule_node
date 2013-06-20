@@ -33,11 +33,12 @@ function run(app){
 	app.post('/users/remove', auth, user.remove);
 	
 	//Friends
-	app.post('/friend/list',auth, friends.list);
-	app.post('/friend/near',auth, friends.near);
-	app.post('/friend/normal',auth, friends.normal);
-	app.post('/friend/confirm',auth, friends.confirm);
-	app.post('/friend/remove',auth, friends.remove);
+	app.get('/friend/list',auth, friends.list);
+	app.get('/friend/near',auth, friends.near);
+	app.get('/friend/normal',auth, friends.normal);
+	app.get('/friend/confirm',auth, friends.confirm);
+	app.get('/friend/cancel',auth, friends.cancel);
+	app.get('/friend/remove',auth, friends.remove);
 	
 	//Location
 	app.post('/loc/rec', auth, loc.rec);
@@ -66,6 +67,7 @@ function debug(app){
 	app.get('/friend/near',auth, friends.near);
 	app.get('/friend/normal',auth, friends.normal);
 	app.get('/friend/confirm',auth, friends.confirm);
+	app.get('/friend/cancel',auth, friends.cancel);
 	app.get('/friend/remove',auth, friends.remove);
 	
 	//Location
