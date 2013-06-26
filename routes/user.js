@@ -17,11 +17,11 @@ function sendError(res, err){
 }
 
 exports.reg = function(req, res){
-	var number = req.body.number;
+	var name = req.body.name;
 	var password = req.body.password;
 	
 	var user = new User({
-		number:number,
+		name:name,
 		password:cryptoPassword(password)
 	});
 	
